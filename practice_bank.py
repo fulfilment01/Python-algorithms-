@@ -50,7 +50,7 @@ class Bank:
             cursor.execute(self.logquery, self.logval)
             self.result = cursor.fetchone()
             if self.result is not None:
-                print("you have successfully registered")
+                print("login successfull ")
                 self.operation()
             else:
                 print("invalid login details")
