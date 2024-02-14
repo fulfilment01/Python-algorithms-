@@ -72,7 +72,7 @@ class SQI:
             print("department not available")
             self.homepage()        
 
-    def operation(self):
+    def operation(self): # voting operation 
         time.sleep(1)
         self.std_choice = input("which of the following operation will you like to perform.\nEnter 1 for voting registration\nEnter 2 to cast vote\nEnter 3 to check voting result: ")
         if self.std_choice =="1":
@@ -89,7 +89,7 @@ class SQI:
         self.std_voter_matric = input("Enter your matric number: ")
         self.std_vote_regdept = input("Enter your department: ").lower()
         if self.std_vote_regdept in self.departments:
-            self.std_vote_regdep_query = f"select * from {self.std_vote_regdept} where matric_number = {'%s'}"
+            self.std_vote_regdep_query = f"select * from {self.std_vote_regdept} where matric_number = {'%s'}"# we are selecting from the department the user input using is matric number
             self.stdvoteval = (self.std_voter_matric, )
             cursor.execute(self.std_vote_regdep_query, self.stdvoteval)
             self.voteregresult = cursor.fetchone()
@@ -128,16 +128,16 @@ class SQI:
                     index = 6
                 elif self.votechoice == "gen_sec":
                     index = 7
-
+                
                 if self.card_result[index] != "nill":# this is to make sure a candidate doesnt vote twice 
                     print("You have already voted in this category")
-                    inp = input("Enter 1 to vote again or 2 to go back home")
+                    inp = input("Enter 1 to vote again: ")
                     if inp == "1":
                         self.voteconfirm()
                     else:
                         self.operation()
                 else:
-                    print(f"this are the list of the {self.votechoice} candidate\n {self.elecCand[self.votechoice]}")
+                    print(f"this are the list of the {self.votechoice} candidate\n {self.elecCand[self.votechoice]}")# self.votechoice is the category of the election, self.eleCand at the index of the category of election choosing are the candidate
                     self.vote = input("Enter the name of the candidate you are voting for\n>>> ")
                     while self.vote not in self.elecCand[self.votechoice]:
                         print("Candidate not among")
@@ -148,7 +148,7 @@ class SQI:
                         cursor.execute(self.querry, self.val)
                         conn.commit()
                         print(f"you have successfully voted for {self.vote}")
-                        inp = input("Enter 1 to vote again or 2 to go back home")
+                        inp = input("Enter 1 to vote again or 2 to go back home: ")
                         if inp == "1":
                             self.voteconfirm()
                         else:

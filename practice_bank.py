@@ -113,12 +113,18 @@ class Bank:
             self.depaccresult =cursor.fetchone()
             if self.depaccresult is not None:
                 self.depamount = int(input("enter the amount you want to do deposit: ")) #deposit amount
-                self.new_bal = self.depaccresult[5] + self.depamount # adding the deposit aamount to the account balance fetched at the index of 5
-                self.updatedepquery = f"update {self.dep_ch} set Account_Bal = {'%s'} where Account_Number = {'%s'}" # querry for the amount you want to deposit by updating the database
-                self.updatedepval = (self.new_bal, self.dep_acc)
-                cursor.execute(self.updatedepquery, self.updatedepval)
-                conn.commit()
-                print("deposit successful")
+                print(f"you are about to send money to {self.depaccresult[1]}")
+                self.pro = input("enter yes to proceed")
+                if self.pro == "yes":
+                    self.new_bal = self.depaccresult[5] + self.depamount # adding the deposit aamount to the account balance fetched at the index of 5
+                    self.updatedepquery = f"update {self.dep_ch} set Account_Bal = {'%s'} where Account_Number = {'%s'}" # querry for the amount you want to deposit by updating the database
+                    self.updatedepval = (self.new_bal, self.dep_acc)
+                    cursor.execute(self.updatedepquery, self.updatedepval)
+                    conn.commit()
+                    print("deposit successful")
+                else:
+                    print("it seems you are not ready to proceed")
+                    self.deposit()
             else:
                 print("invalid account number")
                 self.homepage()
